@@ -19,6 +19,8 @@ import {
   LOAD_REPOS,
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS_ERROR,
+  LOAD_POPULAR,
+  LOAD_POPULAR_SUCCESS,
 } from './constants';
 
 /**
@@ -29,6 +31,11 @@ import {
 export function loadRepos() {
   return {
     type: LOAD_REPOS,
+  };
+}
+export function loadPopular() {
+  return {
+    type: LOAD_POPULAR,
   };
 }
 
@@ -45,6 +52,12 @@ export function reposLoaded(repos, username) {
     type: LOAD_REPOS_SUCCESS,
     repos,
     username,
+  };
+}
+export function popularLoaded(popularResults) {
+  return {
+    type: LOAD_POPULAR_SUCCESS,
+    popularResults,
   };
 }
 

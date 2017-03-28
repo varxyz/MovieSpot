@@ -15,7 +15,7 @@ import Footer from 'components/Footer';
 import withProgressBar from 'components/ProgressBar';
 
 const AppWrapper = styled.div`
-  max-width: calc(768px + 16px * 2);
+  max-width: calc(1190px + 16px * 2);
   margin: 0 auto;
   display: flex;
   min-height: 100%;
@@ -25,18 +25,20 @@ const AppWrapper = styled.div`
 
 export function App(props) {
   return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-        meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
-        ]}
-      />
+    <div>
       <Header />
-      {React.Children.toArray(props.children)}
-      <Footer />
-    </AppWrapper>
+      <AppWrapper>
+        <Helmet
+          titleTemplate="%s - React.js Boilerplate"
+          defaultTitle="React.js Boilerplate"
+          meta={[
+            { name: 'description', content: 'A React.js Boilerplate application' },
+          ]}
+        />
+        {React.Children.toArray(props.children)}
+        <Footer />
+      </AppWrapper>
+    </div>
   );
 }
 
