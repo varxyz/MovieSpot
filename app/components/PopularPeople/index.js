@@ -2,37 +2,32 @@ import React, { PropTypes } from 'react';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
-import RepoListItem from 'containers/RepoListItem';
+
 import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
 
-function ReposList({ loading, error, repos, popular }) {
+function ReposList({ loading, error, repos, popular, people }) {
   if (loading) {
-    return (<Dimmer active>
-        <Loader>Loading</Loader>
-      </Dimmer>)
-;
+    return <LoadingIndicator />;
   }
 
   if (error !== false) {
     const ErrorComponent = () => (
       <ListItem item={'Something went wrong, please try again!'} />
     );
-    return <List component={ErrorComponent} />;
+    return <div component={ErrorComponent} />;
   }
-
-  if (popular) {
-    const movie = popular.results.map((item, index) => (
+  if (people) {
+    const name = people.results.map((item, index) => (
       <Grid.Column style={{ padding: '0.5rem' }} key={`item-${index}`}>
         <Card
           className="pt-card pt-interactive pt-elevation-1"
-          image={`https://image.tmdb.org/t/p/w185/${item.poster_path}`}
+          image={`https://image.tmdb.org/t/p/w185/${item.profile_path}`}
         />
       </Grid.Column>
-      ));
-
+      )).slice(0, 12);
     return (
-      <Grid.Row style={{padding: '1.5rem'}} columns={10}>
-        {movie}
+      <Grid.Row style={{padding: '1.5rem'}} columns={12}>
+        {name}
       </Grid.Row>
     );
   }

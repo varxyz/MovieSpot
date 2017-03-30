@@ -54,10 +54,11 @@ export function reposLoaded(repos, username) {
     username,
   };
 }
-export function popularLoaded(popularResults) {
+export function popularLoaded(popularResults, nameResults) {
   return {
     type: LOAD_POPULAR_SUCCESS,
     popularResults,
+    nameResults,
   };
 }
 

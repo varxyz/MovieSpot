@@ -4,25 +4,26 @@
 
 import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { LOAD_REPOS, LOAD_POPULAR } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError, popularLoaded } from 'containers/App/actions';
+import { LOAD_REPOS, LOAD_POPULAR, LOAD_NAMES } from 'containers/App/constants';
+import { reposLoaded, repoLoadingError, popularLoaded, namesLoaded } from 'containers/App/actions';
 
 import request from 'utils/request';
-import { makeSelectUsername } from 'containers/HomePage/selectors';
+import { makeSelectQueryname } from 'containers/HomePage/selectors';
 
 /**
  * Github repos request/response handler
  */
-export function* getRepos() {
+export function* getSearch() {
   // Select username from store
-  const username = yield select(makeSelectUsername());
+  const query = yield select(makeSelectQueryname());
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-  const requestURL = `http://www.omdbapi.com/?t=${username}`;
+  // const requestURL = `http://www.omdbapi.com/?t=${username}`;
+  const requestURL = `https://api.themoviedb.org/3/search/multi?api_key=c36cf7044bfcaa7f2afb3867f22e8e20&language=en-US&query=${query || ''}&page=1`;
 
   try {
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
-    yield put(reposLoaded(repos, username));
+    const searchResults = yield call(request, requestURL);
+    yield put(reposLoaded(searchResults, query));
   } catch (err) {
     yield put(repoLoadingError(err));
   }
@@ -34,11 +35,16 @@ export function* getPopular() {
   // const username = yield select(makeSelectUsername());
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
   const requestURL = 'https://api.themoviedb.org/3/movie/now_playing?api_key=c36cf7044bfcaa7f2afb3867f22e8e20';
+  const url = 'https://api.themoviedb.org/3/person/popular?api_key=c36cf7044bfcaa7f2afb3867f22e8e20'
 
   try {
     // Call our request helper (see 'utils/request')
+    const nameResult = yield call(request, url);
     const result = yield call(request, requestURL);
-    yield put(popularLoaded(result));
+    // yield put(namesLoaded(namesResult));
+
+    yield put(popularLoaded(result, nameResult));
+
   } catch (err) {
     console.log(err);
   }
@@ -47,11 +53,11 @@ export function* getPopular() {
 /**
  * Root saga manages watcher lifecycle
  */
-export function* githubData() {
+export function* searchData() {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
-  const watcher = yield takeLatest(LOAD_REPOS, getRepos);
+  const watcher = yield takeLatest(LOAD_REPOS, getSearch);
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
@@ -70,6 +76,6 @@ export function* popularData() {
 
 // Bootstrap sagas
 export default [
-  githubData,
+  searchData,
   popularData,
 ];

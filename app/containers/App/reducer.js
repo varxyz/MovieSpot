@@ -23,11 +23,14 @@ import {
 // The initial state of the App
 const initialState = fromJS({
   loading: false,
-  // popular: false,
+  isLoading: false,
   error: false,
   currentUser: false,
+  popularPeople: {
+    people: false,
+  },
   popularData: {
-    results: false,
+    popular: false,
   },
   userData: {
     repositories: false,
@@ -36,11 +39,6 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_REPOS:
-      return state
-        .set('loading', true)
-        .set('error', false)
-        .setIn(['userData', 'repositories'], false);
     case LOAD_POPULAR:
       return state
         .set('loading', true)
@@ -48,11 +46,18 @@ function appReducer(state = initialState, action) {
     case LOAD_POPULAR_SUCCESS:
       return state
         .set('loading', false)
-        .setIn('popular', action.popularResults);
+        .setIn(['popularData', 'popular'], action.popularResults)
+        .setIn(['popularPeople', 'people'], action.nameResults);
+    case LOAD_REPOS:
+      return state
+        .set('isLoading', true)
+        .set('error', false)
+        .setIn(['userData', 'repositories'], false);
     case LOAD_REPOS_SUCCESS:
       return state
         .setIn(['userData', 'repositories'], action.repos)
         .set('loading', false)
+        .set('isLoading', false)
         .set('currentUser', action.username);
     case LOAD_REPOS_ERROR:
       return state

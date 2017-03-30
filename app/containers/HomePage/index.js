@@ -9,21 +9,21 @@ import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
-import { makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectPopular } from 'containers/App/selectors';
 import H2 from 'components/H2';
+import { makeSelectPeople, makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectPopular } from 'containers/App/selectors';
 import PopularList from 'components/ReposList';
+import PopularPeople from 'components/PopularPeople';
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos, loadPopular } from '../App/actions';
+import { loadRepos, loadPopular, loadNames } from '../App/actions';
 import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
 import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react'
-
+import Wrapper from './Wrapper';
 
 export class HomePage extends React.PureComponent { // eslint-disable-line react/prefer-stateless-function
   /**
@@ -37,12 +37,12 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
   }
 
   render() {
-    const { loading, error, repos, popular } = this.props;
-    // if (popular) console.log(this.props);
+    const { loading, error, repos, popular, people } = this.props;
     const reposListProps = {
       loading,
       error,
       repos,
+      people,
       popular,
     };
 
@@ -73,9 +73,18 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
                 />
               </label>
             </Form>
-            <Grid>
-              <PopularList {...reposListProps} />
-            </Grid>
+            <Divider className='divider-main' horizontal><H2>Popular</H2></Divider>
+            <Wrapper>
+              <Grid>
+                <PopularList {...reposListProps} />
+              </Grid>
+            </Wrapper>
+            <Divider className='divider-main' horizontal><H2>Trending Names</H2></Divider>
+            <Wrapper>
+              <Grid>
+                <PopularPeople {...reposListProps} />
+              </Grid>
+            </Wrapper>
           </Section>
         </div>
       </article>
@@ -93,7 +102,16 @@ HomePage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
+  popular: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  people: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
   onSubmitForm: React.PropTypes.func,
+  loadMainPopular: React.PropTypes.func,
   username: React.PropTypes.string,
   onChangeUsername: React.PropTypes.func,
 };
@@ -113,7 +131,8 @@ export function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   popular: makeSelectPopular(),
-  repos: makeSelectRepos(),
+  people: makeSelectPeople(),
+  searchResults: makeSelectRepos(),
   username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError(),

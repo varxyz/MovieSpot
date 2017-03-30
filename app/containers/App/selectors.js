@@ -28,7 +28,15 @@ const makeSelectRepos = () => createSelector(
 
 const makeSelectPopular = () => createSelector(
   selectGlobal,
-  (globalState) => globalState.getIn('popular')
+  (globalState) => globalState.getIn(['popularData', 'popular'])
+);
+const makeSelectPeople = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['popularPeople', 'people'])
+);
+const makeSelectIsLoading = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('isLoading')
 );
 
 const makeSelectLocationState = () => {
@@ -49,10 +57,14 @@ const makeSelectLocationState = () => {
 
 export {
   selectGlobal,
+  makeSelectPeople,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
   makeSelectLocationState,
   makeSelectPopular,
+  makeSelectNamesPopular,
+  makeSelectPopularPeople,
+  makeSelectIsLoading,
 };
