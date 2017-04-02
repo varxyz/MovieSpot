@@ -18,4 +18,7 @@ export const SmallWrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 3px;
   overflow: hidden;
+  @media (max-width: 900px) {
+    width:auto
+  }
 `;

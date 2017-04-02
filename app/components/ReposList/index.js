@@ -38,7 +38,7 @@ function ReposList({ loading, error, repos, popular }) {
 
   if (popular) {
     const movie = popular.results.map((item, index) => (
-      <Grid.Column style={{ padding: '0.5rem' }} key={`item-${index}`}>
+      <Grid.Column mobile={16} style={{ padding: '0.5rem' }} key={`item-${index}`}>
         <Link to={`/movie/${item.id}`}>
           <Card
             className='pt-card pt-interactive pt-elevation-1'

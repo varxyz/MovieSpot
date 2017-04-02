@@ -33,7 +33,7 @@ function ReposList({ loading, movieForeverAlone, movie }) {
   if (movie) {
     const name = movie.recommendations.results
       .map((item, index) => (
-        <Grid.Column style={{ padding: '0.5rem' }} key={`item-${index}`}>
+        <Grid.Column mobile={8} computer={2} style={{ padding: '0.5rem' }} key={`item-${index}`}>
           <Link to={`/movie/${item.id}`} >
             <Card
             className="pt-card pt-interactive pt-elevation-1"
