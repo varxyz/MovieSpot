@@ -13,12 +13,8 @@ import H2 from 'components/H2';
 import { makeSelectPeople, makeSelectRepos, makeSelectLoading, makeSelectError, makeSelectPopular } from 'containers/App/selectors';
 import PopularList from 'components/ReposList';
 import PopularPeople from 'components/PopularPeople';
-import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
-import Form from './Form';
-import Input from './Input';
 import Section from './Section';
-import messages from './messages';
 import { loadRepos, loadPopular, loadNames } from '../App/actions';
 import { changeUsername } from './actions';
 import { makeSelectUsername } from './selectors';
@@ -31,9 +27,9 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
    */
   componentDidMount() {
     this.props.loadMainPopular();
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
+  //   if (this.props.username && this.props.username.trim().length > 0) {
+  //     this.props.onSubmitForm();
+  //   }
   }
 
   render() {
@@ -55,24 +51,7 @@ export class HomePage extends React.PureComponent { // eslint-disable-line react
           ]}
         />
         <div>
-          <CenteredSection>
-          </CenteredSection>
           <Section>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor="username">
-                <FormattedMessage {...messages.trymeMessage} />
-                <AtPrefix>
-                  <FormattedMessage {...messages.trymeAtPrefix} />
-                </AtPrefix>
-                <Input
-                  id="username"
-                  type="text"
-                  placeholder="mxstbr"
-                  value={this.props.username}
-                  onChange={this.props.onChangeUsername}
-                />
-              </label>
-            </Form>
             <Divider className='divider-main' horizontal><H2>Popular</H2></Divider>
             <Wrapper>
               <Grid>
@@ -110,19 +89,19 @@ HomePage.propTypes = {
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  onSubmitForm: React.PropTypes.func,
+  // onSubmitForm: React.PropTypes.func,
   loadMainPopular: React.PropTypes.func,
-  username: React.PropTypes.string,
-  onChangeUsername: React.PropTypes.func,
+  // username: React.PropTypes.string,
+  // onChangeUsername: React.PropTypes.func,
 };
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
-    onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
-    },
+    // onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
+    // onSubmitForm: (evt) => {
+    //   if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+    //   dispatch(loadRepos());
+    // },
     loadMainPopular: () => {
       dispatch(loadPopular());
     },
@@ -133,7 +112,7 @@ const mapStateToProps = createStructuredSelector({
   popular: makeSelectPopular(),
   people: makeSelectPeople(),
   searchResults: makeSelectRepos(),
-  username: makeSelectUsername(),
+  // username: makeSelectUsername(),
   loading: makeSelectLoading(),
   error: makeSelectError(),
 });

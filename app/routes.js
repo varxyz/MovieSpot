@@ -15,12 +15,12 @@ const loadModule = (cb) => (componentModule) => {
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
-
   return [
     {
       path: '/',
       name: 'home',
       getComponent(nextState, cb) {
+        // debugger
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -35,14 +35,44 @@ export default function createRoutes(store) {
 
           renderRoute(component);
         });
-
         importModules.catch(errorLoading);
       },
-    }, {
+    },{
+      path: '/movie/:id',
+      name: 'movie',
+      getComponent(nextState, cb) {
+        // debugger
+        const importModules = Promise.all([
+          import('containers/MoviePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/MoviePage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('movie', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+        importModules.catch(errorLoading);
+      },
+    }, 
+// debugger
+    {
       path: '/features',
       name: 'features',
       getComponent(nextState, cb) {
         import('containers/FeaturePage')
+          .then(loadModule(cb))
+          .catch(errorLoading);
+      },
+    }, {
+      path: '/MoviePage',
+      name: 'moviePage',
+      getComponent(location, cb) {
+        import('containers/MoviePage')
           .then(loadModule(cb))
           .catch(errorLoading);
       },
@@ -56,4 +86,5 @@ export default function createRoutes(store) {
       },
     },
   ];
+debugger
 }

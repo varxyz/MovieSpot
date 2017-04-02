@@ -11,6 +11,10 @@
  */
 
 import { fromJS } from 'immutable';
+import {
+  FETCH_MOVIE,
+  FETCH_MOVIE_SUCCES,
+} from 'containers/MoviePage/constants';
 
 import {
   LOAD_REPOS_SUCCESS,
@@ -18,13 +22,18 @@ import {
   LOAD_REPOS_ERROR,
   LOAD_POPULAR_SUCCESS,
   LOAD_POPULAR,
+  CHANGE_SEARCH_QUERY,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
   loading: false,
+  movie: {
+    singleMovie: false,
+  },
   isLoading: false,
   error: false,
+  queryname: false,
   currentUser: false,
   popularPeople: {
     people: false,
@@ -39,6 +48,18 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_MOVIE:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .setIn(['movie', 'singleMovie'], false);
+    case FETCH_MOVIE_SUCCES:
+      return state
+        .set('loading', false)
+        .setIn(['movie', 'singleMovie'], action.name);
+    case CHANGE_SEARCH_QUERY:
+      return state
+        .set('queryname', action.name);
     case LOAD_POPULAR:
       return state
         .set('loading', true)

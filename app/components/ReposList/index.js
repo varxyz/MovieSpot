@@ -1,16 +1,32 @@
 import React, { PropTypes } from 'react';
 import List from 'components/List';
+import { Link } from 'react-router';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import RepoListItem from 'containers/RepoListItem';
-import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
+import {
+  Button,
+  Divider,
+  Segment,
+  Dimmer,
+  Loader,
+  Card,
+  Icon,
+  Image,
+  Item,
+  Label,
+  Grid,
+  Popup
+} from 'semantic-ui-react';
 
 function ReposList({ loading, error, repos, popular }) {
+  console.log('bebebe');
   if (loading) {
-    return (<Dimmer active>
+    return (
+      <Dimmer active>
         <Loader>Loading</Loader>
-      </Dimmer>)
-;
+      </Dimmer>
+    );
   }
 
   if (error !== false) {
@@ -23,15 +39,17 @@ function ReposList({ loading, error, repos, popular }) {
   if (popular) {
     const movie = popular.results.map((item, index) => (
       <Grid.Column style={{ padding: '0.5rem' }} key={`item-${index}`}>
-        <Card
-          className="pt-card pt-interactive pt-elevation-1"
-          image={`https://image.tmdb.org/t/p/w185/${item.poster_path}`}
-        />
+        <Link to={`/movie/${item.id}`}>
+          <Card
+            className='pt-card pt-interactive pt-elevation-1'
+            image={`https://image.tmdb.org/t/p/w185/${item.poster_path}`}
+          />
+        </Link>
       </Grid.Column>
-      ));
+    ));
 
     return (
-      <Grid.Row style={{padding: '1.5rem'}} columns={10}>
+      <Grid.Row style={{ padding: '1.5rem' }} columns={10}>
         {movie}
       </Grid.Row>
     );

@@ -38,6 +38,15 @@ const makeSelectIsLoading = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('isLoading')
 );
+const makeSelectQueryname = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('queryname')
+);
+const makeSelectMovieQ = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.getIn(['movie', 'singleMovie'])
+);
+
 
 const makeSelectLocationState = () => {
   let prevRoutingState;
@@ -57,14 +66,14 @@ const makeSelectLocationState = () => {
 
 export {
   selectGlobal,
+  makeSelectQueryname,
   makeSelectPeople,
+  makeSelectMovieQ,
   makeSelectCurrentUser,
   makeSelectLoading,
   makeSelectError,
   makeSelectRepos,
   makeSelectLocationState,
   makeSelectPopular,
-  makeSelectNamesPopular,
-  makeSelectPopularPeople,
   makeSelectIsLoading,
 };

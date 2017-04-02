@@ -5,6 +5,7 @@ import A from 'components/A';
 import LocaleToggle from 'containers/LocaleToggle';
 import Wrapper from './Wrapper';
 import messages from './messages';
+import { Icon } from 'semantic-ui-react';
 
 function Footer() {
   return (
@@ -19,7 +20,8 @@ function Footer() {
         <FormattedMessage
           {...messages.authorMessage}
           values={{
-            author: <A href="https://twitter.com/mxstbr">Max Stoiber</A>,
+            love: <Icon name="heart" color="red" />,
+            author: <A href="https://github.com/varxyz"><Icon color="black" name="github" />Sergey M</A>,
           }}
         />
       </section>

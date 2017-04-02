@@ -30,6 +30,7 @@ export function checkStore(store) {
  * Inject an asynchronously loaded reducer
  */
 export function injectAsyncReducer(store, isValid) {
+  // debugger
   return function injectReducer(name, asyncReducer) {
     if (!isValid) checkStore(store);
 
@@ -39,7 +40,7 @@ export function injectAsyncReducer(store, isValid) {
     );
 
     if (Reflect.has(store.asyncReducers, name)) return;
-
+// debugger
     store.asyncReducers[name] = asyncReducer; // eslint-disable-line no-param-reassign
     store.replaceReducer(createReducer(store.asyncReducers));
   };

@@ -21,6 +21,7 @@ import {
   LOAD_REPOS_ERROR,
   LOAD_POPULAR,
   LOAD_POPULAR_SUCCESS,
+  CHANGE_SEARCH_QUERY,
 } from './constants';
 
 /**
@@ -29,11 +30,13 @@ import {
  * @return {object} An action object with a type of LOAD_REPOS
  */
 export function loadRepos() {
+    console.log('hihihihih')
   return {
     type: LOAD_REPOS,
   };
 }
 export function loadPopular() {
+
   return {
     type: LOAD_POPULAR,
   };
@@ -61,7 +64,13 @@ export function popularLoaded(popularResults, nameResults) {
     nameResults,
   };
 }
-
+export function changeSearchQuery(name) {
+  console.log('trololololo')
+  return {
+    type: CHANGE_SEARCH_QUERY,
+    name,
+  };
+}
 /**
  * Dispatched when loading the repositories fails
  *
