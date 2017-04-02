@@ -12,7 +12,6 @@ import HeaderLink from './HeaderLink';
 import Banner from './banner.jpg';
 import StyledSearch from '../Search';
 import Noposter from './noPoster';
-import Wrapper2 from 'containers/HomePage/Wrapper2'
 
 
 import messages from './messages';

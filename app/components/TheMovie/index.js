@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import RepoListItem from 'containers/RepoListItem';
-import Overlay from './overlay'
+import Overlay from './Overlay'
 
 import H3 from '../H3';
 import H1, { bigSpan, smallSpan, H11, H12 } from '../H1';
