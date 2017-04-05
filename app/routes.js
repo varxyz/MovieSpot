@@ -37,7 +37,28 @@ export default function createRoutes(store) {
         });
         importModules.catch(errorLoading);
       },
-    },{
+    }, {
+      path: '/name/:id',
+      name: 'name',
+      getComponent(nextState, cb) {
+        // debugger
+        const importModules = Promise.all([
+          import('containers/NamePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/NamePage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('name', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '/movie/:id',
       name: 'movie',
       getComponent(nextState, cb) {

@@ -6,13 +6,13 @@ const H1 = styled.h1`
 `;
 export const H11 = styled.span`
   font-size: 1.5em;
-  margin: .3em 0 0.5em !important;
+  margin: .3em 0 0.3em !important;
   display: inline-block;
 `;
 export const H12 = styled.span`
   font-size: 2em;
   font-weight:bold;
-  margin: .3em 0 0.5em !important;
+  margin: .3em 0 0.3em !important;
   display: inline-block;
 `;
 

@@ -42,6 +42,10 @@ const makeSelectQueryname = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('queryname')
 );
+const makeSelectNameQ = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('name')
+);
 const makeSelectMovieQ = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['movie', 'singleMovie'])
@@ -66,6 +70,7 @@ const makeSelectLocationState = () => {
 
 export {
   selectGlobal,
+  makeSelectNameQ,
   makeSelectQueryname,
   makeSelectPeople,
   makeSelectMovieQ,

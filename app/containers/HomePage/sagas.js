@@ -6,15 +6,34 @@ import { take, call, put, select, cancel, takeLatest } from 'redux-saga/effects'
 import { LOCATION_CHANGE } from 'react-router-redux';
 import { LOAD_REPOS, LOAD_POPULAR } from 'containers/App/constants';
 import { reposLoaded, repoLoadingError, popularLoaded } from 'containers/App/actions';
-import { fetchMovie, movieFetched } from '../MoviePage/actions';
+import { movieFetched } from '../MoviePage/actions';
 import { FETCH_MOVIE } from '../MoviePage/constants';
+import { nameFetched } from '../NamePage/actions';
+import { FETCH_NAME } from '../NamePage/constants';
 import request from 'utils/request';
 import { makeSelectQueryname } from 'containers/App/selectors';
 import { makeSelectMovie } from 'containers/MoviePage/selectors';
+import { makeSelectName } from 'containers/NamePage/selectors';
 
 /**
  * Github repos request/response handler
  */
+export function* getName() {
+  // Select username from store
+  const url = yield select(makeSelectName());
+  // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
+  // const requestURL = `http://www.omdbapi.com/?t=${username}`;
+  const requestURL = `https://api.themoviedb.org/3/person/${url}?api_key=c36cf7044bfcaa7f2afb3867f22e8e20&append_to_response=combined_credits,images`;
+
+  try {
+    // Call our request helper (see 'utils/request')
+    const searchResults = yield call(request, requestURL);
+    yield put(nameFetched(searchResults, url));
+  } catch (err) {
+    yield put(repoLoadingError(err));
+  }
+}
+
 export function* getMovie() {
   // Select username from store
   const url = yield select(makeSelectMovie());
@@ -30,6 +49,7 @@ export function* getMovie() {
     yield put(repoLoadingError(err));
   }
 }
+
 export function* getSearch() {
   // Select username from store
   const query = yield select(makeSelectQueryname());
@@ -69,6 +89,16 @@ export function* getPopular() {
 /**
  * Root saga manages watcher lifecycle
  */
+export function* nameData() {
+  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
+  // By using `takeLatest` only the result of the latest API call is applied.
+  // It returns task descriptor (just like fork) so we can continue execution
+  const watcher = yield takeLatest(FETCH_NAME, getName);
+
+  // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
 export function* searchData() {
   // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
   // By using `takeLatest` only the result of the latest API call is applied.
@@ -102,6 +132,7 @@ export function* popularData() {
 
 // Bootstrap sagas
 export default [
+  nameData,
   searchData,
   popularData,
   movieData,

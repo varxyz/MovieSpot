@@ -30,13 +30,16 @@ import {
  * @return {object} An action object with a type of LOAD_REPOS
  */
 export function loadRepos() {
-    console.log('hihihihih')
   return {
     type: LOAD_REPOS,
   };
 }
 export function loadPopular() {
-
+  return {
+    type: LOAD_POPULAR,
+  };
+}
+export function fetchName() {
   return {
     type: LOAD_POPULAR,
   };
@@ -57,6 +60,7 @@ export function reposLoaded(repos, username) {
     username,
   };
 }
+
 export function popularLoaded(popularResults, nameResults) {
   return {
     type: LOAD_POPULAR_SUCCESS,
@@ -65,7 +69,6 @@ export function popularLoaded(popularResults, nameResults) {
   };
 }
 export function changeSearchQuery(name) {
-  console.log('trololololo')
   return {
     type: CHANGE_SEARCH_QUERY,
     name,

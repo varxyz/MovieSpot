@@ -24,7 +24,7 @@ class ModalDimmer extends Component {
 
     return (
       <div>
-        <Menu style={{marginTop:'10'}} size='mini' icon="labeled">
+        <Menu style={{margin:'.7em 0'}} size='mini' icon="labeled">
           <Modal
             trigger={
               <Menu.Item style={{ minWidth: '5.5em'}} name="Trailer" onClick={() => console.log('990')}>
@@ -70,7 +70,7 @@ class ModalDimmer extends Component {
             IMDb
           </Menu.Item>
           {(() => {
-            if (movie.reviews.length === 0) {
+            if (movie.reviews.results.length === 0) {
               return (
                 <Menu.Item style={{ minWidth: '5.5em'}} disabled name="Reviews">
                   <Icon disabled name="users" />
@@ -79,7 +79,7 @@ class ModalDimmer extends Component {
               );
             } else {
               return (
-                <Menu.Item style={{ minWidth: '5.5em'}} name="Reviews" onClick={this.show('inverted')}>
+                <Menu.Item style={{ minWidth: '6.2em'}} name="Reviews" onClick={this.show('inverted')}>
                   <Icon name="users" />
                   Reviews
                 </Menu.Item>

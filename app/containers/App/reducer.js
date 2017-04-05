@@ -17,6 +17,11 @@ import {
 } from 'containers/MoviePage/constants';
 
 import {
+  FETCH_NAME,
+  FETCH_NAME_SUCCESS,
+} from 'containers/NamePage/constants';
+
+import {
   LOAD_REPOS_SUCCESS,
   LOAD_REPOS,
   LOAD_REPOS_ERROR,
@@ -27,6 +32,7 @@ import {
 
 // The initial state of the App
 const initialState = fromJS({
+  name: false,
   loading: false,
   movie: {
     singleMovie: false,
@@ -54,9 +60,20 @@ function appReducer(state = initialState, action) {
         .set('error', false)
         .setIn(['movie', 'singleMovie'], false);
     case FETCH_MOVIE_SUCCES:
+    console.log(action.name);
       return state
         .set('loading', false)
         .setIn(['movie', 'singleMovie'], action.name);
+    case FETCH_NAME:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .setIn(['movie', 'singleMovie'], false);
+    case FETCH_NAME_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('name', action.name);
     case CHANGE_SEARCH_QUERY:
       return state
         .set('queryname', action.name);

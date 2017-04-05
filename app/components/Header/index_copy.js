@@ -3,9 +3,8 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import debounce from 'lodash.debounce';
-import { Link, browserHistory } from 'react-router';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import NavItemm from './NavItemm'
+import { Link, browserHistory } from 'react-router'
+
 
 import A from './A';
 import Img from './Img';
@@ -31,7 +30,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     this.state = {
       isLoading2: false,
       value2: '',
-      results2: [],
+      results2: []
     };
   }
   componentDidMount() {
@@ -40,19 +39,19 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
   resetComponent = () => this.setState({
     isLoading2: false,
     value2: '',
-    results2: [],
+    results2: []
   })
 
   handleSelected = (e, result) => {
-    if (result.mediaType === 'person') browserHistory.push(`/name/${result.key}`);
-    if (result.mediaType === 'movie') browserHistory.push(`/movie/${result.key}`);
+    if(result.mediaType === 'person') browserHistory.push(`/name/${result.key}`);
+    if(result.mediaType === 'movie') browserHistory.push(`/movie/${result.key}`);
   }
 
   handleSearchChange = (e) => {
     const res = this.props.searchResults.results;
     this.setState({
       isLoading2: true,
-      value2: e.target.value,
+      value2: e.target.value
     });
     this.props.assignQuery(e.target.value);
     setTimeout(() => {
@@ -61,9 +60,9 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
       } else if (this.props.searchResults.total_results < 1) return this.resetComponent();
     }, 20);
     setTimeout(() => {
-      if (this.props.searchResults.results && this.props.searchResults.results.length > 0) {
+      if (res && res.length > 0) {
         console.log('plus');
-        const results = this.props.searchResults.results.filter((item) => item.media_type === 'movie' || 'person').map((item) => ({
+        const results = res.filter((item) => item.media_type === 'movie' || 'person').map((item) => ({
           key: item.id,
           mediaType: item.media_type,
           title: item.original_title || item.name,
@@ -77,7 +76,7 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
         });
       } else {
         console.log('minus');
-        return this.resetComponent();
+        return this.resetComponent()
       }
     }, 300);
   }
@@ -85,60 +84,61 @@ class Header extends React.Component { // eslint-disable-line react/prefer-state
     // const { queryname, searchResults, isLoading } = this.props;
 
     return (
-      <Navbar>
-        <Navbar.Header>
-          <Navbar.Brand>
-            <Link style={{ color: '#474747' }} activeStyle={{ color: '#000' }} to="/"> MovieSpot
+      <div>
+        <StyledMenu style={ { justifyContent: 'center' } }>
+          <Menu.Item header>
+            <Link
+                  style={ { color: '#474747' } }
+                  activeStyle={ { color: '#000' } }
+                  to='/'> MovieSpot
             </Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Nav>
-          <NavItem eventKey={1} >
-            Alo
-          </NavItem>
-        </Nav>
-        <Navbar.Collapse>
-          <Nav>
-            <NavItem eventKey={1} >
-              <Link style={{ color: '#333' }} activeStyle={{ color: '#000' }} to="/movie/334543"> Watchlist
-              </Link>
-            </NavItem>
-            <NavItemm eventKey={2}>
-              <StyledSearch
-                fluid
-                className="alo"
-                placeholder="Search movies and names..."
-                value={this.props.queryname || ''}
-                results={this.state.results2}
-                loading={this.state.isLoading2}
-                onResultSelect={this.handleSelected}
-                onSearchChange={this.handleSearchChange}
-              />
-            </NavItemm>
-            <NavDropdown eventKey={3} title="Dropdown" id="basic-nav-dropdown">
-              <MenuItem eventKey={3.1}> Action
-              </MenuItem>
-              <MenuItem eventKey={3.2}> Another action
-              </MenuItem>
-              <MenuItem eventKey={3.3}> Something else here
-              </MenuItem>
-              <MenuItem divider />
-              <MenuItem eventKey={3.3}> Separated link
-              </MenuItem>
-            </NavDropdown>
-          </Nav>
-          <Nav pullRight>
-            <NavItem eventKey={1} href="#">
-              Link Right
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-              Link Right
-            </NavItem>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    );
+          </Menu.Item>
+          <Menu.Item as='a'>
+            <Link
+                  style={ { color: '#333' } }
+                  activeStyle={ { color: '#000' } }
+                  to='/movie/334543'> Watchlist
+            <Label
+                   basic
+                   style={ { marginLeft: '.5em' } }>
+              649
+            </Label>
+            </Link>
+          </Menu.Item>
+          <Menu.Item style={ { width: '40em' } }>
+            <StyledSearch
+                          fluid
+                          className="alo"
+                          placeholder="Search movies and names..."
+                          value={ this.props.queryname || '' }
+                          results={ this.state.results2 }
+                          loading={ this.state.isLoading2 }
+                          onResultSelect={ this.handleSelected }
+                          onSearchChange={ this.handleSearchChange } />
+          </Menu.Item>
+          <Menu.Item
+                     href="https://github.com/varxyz"
+                     target="_blank"
+                     as='a'>
+            <A>
+              <Icon
+                    style={ { marginBottom: '0.2em' } }
+                    color="grey"
+                    size="large"
+                    name="github" />
+            </A>
+          </Menu.Item>
+          <Menu.Item>
+            <Button
+                    basic
+                    size="mini">
+              Log-in
+            </Button>
+          </Menu.Item>
+        </StyledMenu>
+        
+      </div>
+      );
   }
 }
 export function mapDispatchToProps(dispatch) {
