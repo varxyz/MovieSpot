@@ -31,7 +31,7 @@ function ReposList({loading, movieForeverAlone, movie}) {
       ))
       .slice(0, 8);
     return (
-      <Grid.Row style={ { padding: '1rem', margin:'0' } } columns={ 8 }>
+      <Grid.Row style={ { padding: '1rem', margin: '0' } } columns={ 8 }>
         { name }
       </Grid.Row>
       );

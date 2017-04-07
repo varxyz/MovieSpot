@@ -60,7 +60,6 @@ function appReducer(state = initialState, action) {
         .set('error', false)
         .setIn(['movie', 'singleMovie'], false);
     case FETCH_MOVIE_SUCCES:
-    console.log(action.name);
       return state
         .set('loading', false)
         .setIn(['movie', 'singleMovie'], action.name);

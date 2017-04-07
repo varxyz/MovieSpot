@@ -14,13 +14,9 @@ function Footer() {
         <FormattedMessage {...messages.licenseMessage} />
       </section>
       <section>
-        <LocaleToggle />
-      </section>
-      <section>
         <FormattedMessage
           {...messages.authorMessage}
           values={{
-            love: <Icon name="heart" color="red" />,
             author: <A href="https://github.com/varxyz"><Icon color="black" name="github" />Sergey M</A>,
           }}
         />

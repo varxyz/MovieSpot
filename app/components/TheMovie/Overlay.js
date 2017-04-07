@@ -12,10 +12,20 @@ import {
 } from 'semantic-ui-react';
 
 class ModalDimmer extends Component {
-  state = { open: false };
+  state = {
+    open: false,
+  };
 
-  show = dimmer => () => this.setState({ dimmer, open: true });
-  close = () => this.setState({ open: false });
+  show = dimmer =>
+    () =>
+      this.setState({
+        dimmer,
+        open: true,
+      });
+  close = () =>
+    this.setState({
+      open: false,
+    });
 
   render() {
     const { open, dimmer } = this.state;
@@ -24,12 +34,11 @@ class ModalDimmer extends Component {
 
     return (
       <div>
-        <Menu style={{margin:'.7em 0'}} size='mini' icon="labeled">
+        <Menu style={{ margin: '.7em 0' }} size="mini" icon="labeled">
           <Modal
             trigger={
-              <Menu.Item style={{ minWidth: '5.5em'}} name="Trailer" onClick={() => console.log('990')}>
-                <Icon name="play circle outline" />
-                Trailer
+              <Menu.Item style={{ minWidth: '5.5em' }} name="Trailer">
+                <Icon name="play circle outline" /> Trailer
               </Menu.Item>
             }
             basic
@@ -55,9 +64,8 @@ class ModalDimmer extends Component {
               />
             </Modal.Content>
           </Modal>
-
           <Menu.Item
-            style={{ minWidth: '5.5em'}}
+            style={{ minWidth: '5.5em' }}
             name="imdb"
             onClick={() => {
               window.open(
@@ -66,37 +74,53 @@ class ModalDimmer extends Component {
               );
             }}
           >
-            <Icon name="video" />
-            IMDb
+            <Icon name="video" /> IMDb
           </Menu.Item>
           {(() => {
             if (movie.reviews.results.length === 0) {
               return (
-                <Menu.Item style={{ minWidth: '5.5em'}} disabled name="Reviews">
+                <Menu.Item
+                  style={{ minWidth: '5.5em' }}
+                  disabled
+                  name="Reviews"
+                >
                   <Icon disabled name="users" />
                   <span style={{ color: '#989999' }}>Reviews</span>
                 </Menu.Item>
               );
             } else {
               return (
-                <Menu.Item style={{ minWidth: '6.2em'}} name="Reviews" onClick={this.show('inverted')}>
-                  <Icon name="users" />
-                  Reviews
+                <Menu.Item
+                  style={{ minWidth: '6.2em' }}
+                  name="Reviews"
+                  onClick={this.show('inverted')}
+                >
+                  <Icon name="users" /> Reviews
                 </Menu.Item>
               );
             }
           })()}
-
         </Menu>
-        <Modal dimmer={dimmer} open={open} onClose={this.close}>
-          <Modal.Header>Reviews</Modal.Header>
+        <Modal
+          style={{ bottom: 'initial' }}
+          dimmer={dimmer}
+          open={open}
+          onClose={this.close}
+        >
+          <Modal.Header>
+            Reviews
+          </Modal.Header>
           <Modal.Content>
             {movie.reviews.results.map((item, id) => (
               <Modal.Description key={id}>
-                <Header style={{margin:'25px 0 5px'}}>
-                  <Label pointing='below' color='teal' horizontal>{item.author}</Label>
+                <Header style={{ margin: '25px 0 5px' }}>
+                  <Label pointing="below" color="teal" horizontal>
+                    {item.author}
+                  </Label>
                 </Header>
-                <p>{item.content}</p>
+                <p>
+                  {item.content}
+                </p>
               </Modal.Description>
             ))}
           </Modal.Content>

@@ -5,6 +5,7 @@
 import { createSelector } from 'reselect';
 
 const selectGlobal = (state) => state.get('global');
+const selectAuth = (state) => state.get('auth');
 
 const makeSelectCurrentUser = () => createSelector(
   selectGlobal,
@@ -46,6 +47,10 @@ const makeSelectNameQ = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('name')
 );
+const makeSelectAuth = () => createSelector(
+  selectAuth,
+  (authState) => authState.toJS()
+);
 const makeSelectMovieQ = () => createSelector(
   selectGlobal,
   (globalState) => globalState.getIn(['movie', 'singleMovie'])
@@ -69,7 +74,9 @@ const makeSelectLocationState = () => {
 };
 
 export {
+  makeSelectAuth,
   selectGlobal,
+  selectAuth,
   makeSelectNameQ,
   makeSelectQueryname,
   makeSelectPeople,

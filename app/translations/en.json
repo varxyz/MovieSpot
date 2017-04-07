@@ -1,6 +1,6 @@
 {
-  "boilerplate.components.Footer.author.message": "Made with {love} by {author}.",
-  "boilerplate.components.Footer.license.message": "TechStack: React, Redux, ReduxSaga, Firebase, StyledComponents",
+  "boilerplate.components.Footer.author.message": "Made by {author}.",
+  "boilerplate.components.Footer.license.message": "TechStack: React, Redux, ImmutableJS, ReduxSaga, Firebase, OAuth, StyledComponents",
   "boilerplate.components.Header.features": "Features",
   "boilerplate.components.Header.home": "Home",
   "boilerplate.containers.FeaturePage.css.header": "Features",

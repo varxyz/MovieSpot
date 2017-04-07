@@ -59,6 +59,27 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/signin',
+      name: 'signin',
+      getComponent(nextState, cb) {
+        // debugger
+        const importModules = Promise.all([
+          import('containers/auth/reducer'),
+          import('containers/auth/sagas'),
+          import('containers/SignIn'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('name', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '/movie/:id',
       name: 'movie',
       getComponent(nextState, cb) {
@@ -79,8 +100,7 @@ export default function createRoutes(store) {
         });
         importModules.catch(errorLoading);
       },
-    }, 
-// debugger
+    },
     {
       path: '/features',
       name: 'features',
@@ -107,5 +127,4 @@ export default function createRoutes(store) {
       },
     },
   ];
-debugger
 }

@@ -14,6 +14,9 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 import withProgressBar from 'components/ProgressBar';
 
+import { connect } from 'react-redux';
+import { authActions, getAuth } from '../auth';
+
 const AppWrapper = styled.div`
   max-width: calc(1190px + 16px * 2);
   margin: 0 auto;
@@ -23,10 +26,11 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App(props) {
+export function App({ children, signOut}) {
   return (
     <div>
-      <Header />
+      <Header 
+        signOut={signOut}/>
       <AppWrapper>
         <Helmet
           titleTemplate="%s - React.js Boilerplate"
@@ -35,15 +39,26 @@ export function App(props) {
             { name: 'description', content: 'A React.js Boilerplate application' },
           ]}
         />
-        {React.Children.toArray(props.children)}
+        {React.Children.toArray(children)}
         <Footer />
       </AppWrapper>
     </div>
   );
 }
+// const mapStateToProps = getAuth;
+
+const mapDispatchToProps = {
+  signOut: authActions.signOut,
+};
+
 
 App.propTypes = {
   children: React.PropTypes.node,
 };
 
-export default withProgressBar(App);
+export default connect(
+  // mapStateToProps,
+  null,
+  mapDispatchToProps
+)(App);
+// export default withProgressBar(App);

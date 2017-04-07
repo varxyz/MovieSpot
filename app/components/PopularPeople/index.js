@@ -19,7 +19,7 @@ function ReposList({ loading, error, repos, popular, people }) {
   }
   if (people) {
     const name = people.results.map((item, index) => (
-      <Grid.Column style={{ padding: '0.3rem' }} key={`item-${index}`}>
+      <Grid.Column mobile={4} style={{ padding: '0.3rem' }} key={`item-${index}`}>
         <Link to={`/name/${item.id}`}><Card
           className="pt-card pt-interactive pt-elevation-1"
           image={`https://image.tmdb.org/t/p/w185/${item.profile_path}`}

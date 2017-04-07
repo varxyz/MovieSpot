@@ -14,10 +14,23 @@ import request from 'utils/request';
 import { makeSelectQueryname } from 'containers/App/selectors';
 import { makeSelectMovie } from 'containers/MoviePage/selectors';
 import { makeSelectName } from 'containers/NamePage/selectors';
+import { firebaseAuth } from 'containers/firebase';
+import { authActions } from 'containers/auth/actions';
 
 /**
  * Github repos request/response handler
  */
+export function* signIn(authProvider) {
+  try {
+    const authData = yield call([firebaseAuth, firebaseAuth.signInWithPopup], authProvider);
+
+    yield put(authActions.signInFulfilled(authData.user));
+    yield history.push('/');
+  }
+  catch (error) {
+    yield put(authActions.signInFailed(error));
+  }
+}
 export function* getName() {
   // Select username from store
   const url = yield select(makeSelectName());
@@ -73,7 +86,6 @@ export function* getPopular() {
   // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
   const requestURL = 'https://api.themoviedb.org/3/movie/now_playing?api_key=c36cf7044bfcaa7f2afb3867f22e8e20';
   const url = 'https://api.themoviedb.org/3/person/popular?api_key=c36cf7044bfcaa7f2afb3867f22e8e20';
-
   try {
     // Call our request helper (see 'utils/request')
     const nameResult = yield call(request, url);
@@ -124,14 +136,19 @@ export function* popularData() {
   // By using `takeLatest` only the result of the latest API call is applied.
   // It returns task descriptor (just like fork) so we can continue execution
   const watcher = yield takeLatest(LOAD_POPULAR, getPopular);
-
   // Suspend execution until location changes
+  yield take(LOCATION_CHANGE);
+  yield cancel(watcher);
+}
+export function* watchSignIn() {
+  const watcher = yield takeLatest(authActions.SIGN_IN, signIn);
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
 
 // Bootstrap sagas
 export default [
+  watchSignIn,
   nameData,
   searchData,
   popularData,
