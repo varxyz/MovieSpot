@@ -1,27 +1,15 @@
 import React from 'react';
-// import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import debounce from 'lodash.debounce';
 import { Link, browserHistory } from 'react-router';
-import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
-import NavItemm, { NavItemSmall } from './NavItemm';
-import { authActions, getAuth } from 'containers/auth';
+import { Navbar, Nav } from 'react-bootstrap';
+import { Button, Icon } from 'semantic-ui-react';
 
-import A from './A';
-import Img from './Img';
-import HeaderLink from './HeaderLink';
-import Banner from './banner.jpg';
+import { loadRepos, changeSearchQuery } from 'containers/App/actions';
+import { makeSelectRepos, makeSelectQueryname, makeSelectAuth } from 'containers/App/selectors';
+import NavItemm from './NavItemm';
 import StyledSearch from '../Search';
 import Noposter from './noPoster';
-
-import messages from './messages';
-import { changeSearchQuery } from '../../containers/App/actions';
-import { loadRepos, loadPopular } from '../../containers/App/actions';
-import { makeSelectRepos, makeSelectQueryname, makeSelectAuth } from '../../containers/App/selectors';
-
-import { Button, Icon, Modal, Search, Grid, Label, Menu, Form } from 'semantic-ui-react';
-import StyledMenu from './Menu';
 
 class Header extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -95,7 +83,6 @@ class Header extends React.Component {
     );
   };
   render() {
-    // const { queryname, searchResults, isLoading } = this.props;
     return (
       <Navbar style={{ backgroundColor: '#fff', marginBottom: '0' }}>
         <Navbar.Header>
@@ -106,6 +93,8 @@ class Header extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
+        <Navbar.Collapse>
+          <Nav>
             <NavItemm eventKey={2}>
               <StyledSearch
                 style={{ textAlign: 'center' }}
@@ -119,12 +108,11 @@ class Header extends React.Component {
                 onSearchChange={this.handleSearchChange}
               />
             </NavItemm>
-        <Navbar.Collapse>
+          </Nav>
           <Nav pullRight style={{ padding: '0.8em', textAlign: 'center' }}>
             { this.props.authenticated.authenticated
               ?
                 <Navbar.Text eventKey={1}>
-                  {/* { `Howdy, ${this.props.authenticated.user.authUser.displayName}!\xa0\xa0\xa0` }*/}
                   <Button.Group >
                     <Link to="/watchlist">
                       <Button basic>
@@ -162,8 +150,6 @@ const mapStateToProps = createStructuredSelector({
   queryname: makeSelectQueryname(),
   searchResults: makeSelectRepos(),
   authenticated: makeSelectAuth(),
-// isLoading: makeSelectIsLoading(),
 });
 
-// Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

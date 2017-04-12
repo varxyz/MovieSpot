@@ -1,7 +1,3 @@
-// These are the pages you can go to.
-// They are all wrapped in the App component, which should contain the navbar etc
-// See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
-// about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
 
 const errorLoading = (err) => {
@@ -26,9 +22,7 @@ export default function createRoutes(store) {
     {
       path: '/',
       name: 'home',
-      // onEnter: requireAuth(store),
       getComponent(nextState, cb) {
-        // debugger
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -48,9 +42,7 @@ export default function createRoutes(store) {
     }, {
       path: '/name/:id',
       name: 'name',
-      // onEnter: requireAuth(),
       getComponent(nextState, cb) {
-        // debugger
         const importModules = Promise.all([
           import('containers/NamePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -72,7 +64,6 @@ export default function createRoutes(store) {
       name: 'watchlist',
       onEnter: requireAuth(store),
       getComponent(nextState, cb) {
-        // debugger
         const importModules = Promise.all([
           import('containers/HomePage/reducer'),
           import('containers/HomePage/sagas'),
@@ -93,7 +84,6 @@ export default function createRoutes(store) {
       path: '/signin',
       name: 'signin',
       getComponent(nextState, cb) {
-        // debugger
         const importModules = Promise.all([
           import('containers/auth/reducer'),
           import('containers/auth/sagas'),
@@ -114,7 +104,6 @@ export default function createRoutes(store) {
       path: '/movie/:id',
       name: 'movie',
       getComponent(nextState, cb) {
-        // debugger
         const importModules = Promise.all([
           import('containers/MoviePage/reducer'),
           import('containers/HomePage/sagas'),

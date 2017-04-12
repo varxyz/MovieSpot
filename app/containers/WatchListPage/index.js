@@ -1,31 +1,13 @@
-/*
- * FeaturePage
- *
- * List all the features
- */
 import React from 'react';
 import Helmet from 'react-helmet';
-import Section from '../HomePage/Section';
 import { createStructuredSelector } from 'reselect';
+import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import Divider from 'components/Divider';
-import { Link } from 'react-router';
 import { loadWatch, fetchMovieDb } from 'containers/App/actions';
-
-import LoadingIndicator from 'components/LoadingIndicator';
-import ColumnFit from 'components/ColumnFit/';
-import { fetchMovie } from '../MoviePage/actions';
-
-import H1 from 'components/H1';
-import H2 from 'components/H2';
-import { Button, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
-import { SmallWrapper, BigWrapper } from '../MoviePage/Wrapper';
-// import { fetchMovie, setMovie, toggle } from './actions';
-// import { makeSelectMovie } from './selectors';
-import { makeSelectMovieQ, makeSelectLoading, makeSelectAuth, makeSelectFavs, makeSelectDbFavs } from '../App/selectors';
-import TheMovie from 'components/TheMovie';
-import Recommended from 'components/Recommended';
+import { BigWrapper } from '../MoviePage/Wrapper';
+import { makeSelectLoading, makeSelectAuth, makeSelectFavs, makeSelectDbFavs } from '../App/selectors';
 import Favorites from 'components/WatchListItem';
+import Section from '../HomePage/Section';
 
 export class WatchList extends React.Component {
   // eslint-disable-line react/prefer-stateless-function

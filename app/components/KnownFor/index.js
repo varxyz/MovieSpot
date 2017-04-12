@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import List from 'components/List';
-import ListItem from 'components/ListItem';
-import LoadingIndicator from 'components/LoadingIndicator';
-
-import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
+import { Dimmer, Loader, Card, Grid } from 'semantic-ui-react';
 
 function ReposList({ loading, name }) {
   if (loading) {
-    return <LoadingIndicator />;
+    return (
+      <Dimmer active>
+        <Loader>Fetching...</Loader>
+      </Dimmer>
+    );
   }
 
   // if (error !== false) {
@@ -44,7 +44,6 @@ function ReposList({ loading, name }) {
           </Link>
         </Grid.Column>
       ));
-    // console.log(crew);
     return (
       <Grid.Row style={{ padding: '1em', margin: '0' }} columns={8}>
         { crew }

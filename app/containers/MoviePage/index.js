@@ -1,37 +1,17 @@
-/*
- * FeaturePage
- *
- * List all the features
- */
 import React from 'react';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
-import Section from '../HomePage/Section';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
 import Divider from 'components/Divider';
-
-import H1 from 'components/H1';
 import H2 from 'components/H2';
-import {
-  Button,
-  Segment,
-  Dimmer,
-  Loader,
-  Card,
-  Icon,
-  Image,
-  Item,
-  Label,
-  Grid,
-  Popup,
-} from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
+import TheMovie from 'components/TheMovie';
+import Recommended from 'components/Recommended';
 import { SmallWrapper, BigWrapper } from './Wrapper';
 import { fetchMovie, setMovie, toggle } from './actions';
 import { makeSelectMovie } from './selectors';
 import { makeSelectMovieQ, makeSelectLoading } from '../App/selectors';
-import TheMovie from 'components/TheMovie';
-import Recommended from 'components/Recommended';
+import Section from '../HomePage/Section';
 
 export class MoviePage extends React.Component {
   // eslint-disable-line react/prefer-stateless-function
@@ -56,15 +36,7 @@ export class MoviePage extends React.Component {
     };
     return (
       <article>
-        <Helmet
-          title="Home Page"
-          meta={[
-            {
-              name: 'description',
-              content: 'A React.js Boilerplate application homepage',
-            },
-          ]}
-        />
+        <Helmet title="Home Page" meta={[{ name: 'description', content: 'A React.js Boilerplate application homepage' }, ]} />
         <div>
           <Section>
             <BigWrapper>
@@ -72,7 +44,9 @@ export class MoviePage extends React.Component {
                 <TheMovie {...reposListProps} />
               </Grid>
             </BigWrapper>
-            <Divider horizontal><H2>Recommended</H2></Divider>
+            <Divider horizontal>
+              <H2>Recommended</H2>
+            </Divider>
             <SmallWrapper>
               <Grid>
                 <Recommended {...reposListProps} />
@@ -87,10 +61,10 @@ export class MoviePage extends React.Component {
 
 export function mapDispatchToProps(dispatch) {
   return {
-    fetchMovie: id => {
+    fetchMovie: (id) => {
       dispatch(fetchMovie(id));
     },
-    setTheMovie: id => {
+    setTheMovie: (id) => {
       dispatch(setMovie(id));
     },
     handleToggle: (id, active) => {
@@ -105,5 +79,4 @@ const mapStateToProps = createStructuredSelector({
   loading: makeSelectLoading(),
 });
 
-// Wrap the component to inject dispatch and state into it
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);

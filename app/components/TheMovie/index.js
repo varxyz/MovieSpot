@@ -2,13 +2,9 @@ import React, { PropTypes } from 'react';
 import List from 'components/List';
 import { Link } from 'react-router';
 import ListItem from 'components/ListItem';
-import LoadingIndicator from 'components/LoadingIndicator';
-import RepoListItem from 'containers/RepoListItem';
 import Overlay from './Overlay';
-
-import H3 from '../H3';
-import H1, { bigSpan, smallSpan, H11, H12 } from '../H1';
-import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
+import { H11, H12 } from '../H1';
+import { Button, Divider, Dimmer, Loader, Card, Icon, Image, Label, Grid } from 'semantic-ui-react';
 
 class ReposList extends React.Component {
   constructor(props) {
@@ -18,8 +14,6 @@ class ReposList extends React.Component {
     };
   }
   toggleStatus = () => {
-    // console.log(this.state)
-    // const { task } = this.props;
     this.setState({
       active: !this.state.active,
     }),

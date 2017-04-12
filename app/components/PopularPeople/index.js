@@ -1,17 +1,10 @@
 import React, { PropTypes } from 'react';
-import List from 'components/List';
 import ListItem from 'components/ListItem';
-import LoadingIndicator from 'components/LoadingIndicator';
 import ColumnFit from 'components/ColumnFit/';
 import { Link } from 'react-router';
+import { Card, Grid } from 'semantic-ui-react';
 
-import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
-
-function ReposList({ loading, error, repos, popular, people }) {
-  if (loading) {
-    return <LoadingIndicator />;
-  }
-
+function ReposList({ error, people }) {
   if (error !== false) {
     const ErrorComponent = () => (
       <ListItem item={'Something went wrong, please try again!'} />
@@ -28,7 +21,7 @@ function ReposList({ loading, error, repos, popular, people }) {
       </ColumnFit>
       )).slice(0, 16);
     return (
-      <Grid.Row style={{padding: '1.2em', margin:'0'}} columns={12}>
+      <Grid.Row style={{ padding: '1.2em', margin: '0' }} columns={12}>
         {name}
       </Grid.Row>
     );
@@ -38,9 +31,7 @@ function ReposList({ loading, error, repos, popular, people }) {
 }
 
 ReposList.propTypes = {
-  loading: PropTypes.bool,
   error: PropTypes.any,
-  repos: PropTypes.any,
   // popular: PropTypes.array,
 };
 
