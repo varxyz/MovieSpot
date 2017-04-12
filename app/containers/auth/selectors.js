@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 
 
 export function isAuthenticated(state) {
+  console.log(state);
   return state.auth.authenticated;
 }
 

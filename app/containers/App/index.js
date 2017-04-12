@@ -29,8 +29,8 @@ const AppWrapper = styled.div`
 export function App({ children, signOut}) {
   return (
     <div>
-      <Header 
-        signOut={signOut}/>
+      <Header
+        signOut={signOut} />
       <AppWrapper>
         <Helmet
           titleTemplate="%s - React.js Boilerplate"
@@ -40,7 +40,7 @@ export function App({ children, signOut}) {
           ]}
         />
         {React.Children.toArray(children)}
-        <Footer />
+        {/*<Footer />*/}
       </AppWrapper>
     </div>
   );

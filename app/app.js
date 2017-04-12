@@ -24,9 +24,6 @@ import App from 'containers/App';
 // Import selector for `syncHistoryWithStore`
 import { makeSelectLocationState } from 'containers/App/selectors';
 
-// Import Language Provider
-import LanguageProvider from 'containers/LanguageProvider';
-
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
 import '!file-loader?name=[name].[ext]!./favicon.ico';
@@ -36,15 +33,13 @@ import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line impor
 
 import configureStore from './store';
 
-// Import i18n messages
-import { translationMessages } from './i18n';
-
 // Import CSS reset and Global Styles
 import './global-styles';
 
 // Import routes
 import createRoutes from './routes';
 
+import { initAuth } from 'containers/auth';
 // Create redux store with history
 // this uses the singleton browserHistory provided by react-router
 // Optionally, this could be changed to leverage a created history
@@ -65,50 +60,52 @@ const rootRoute = {
   childRoutes: createRoutes(store),
 };
 
-const render = (messages) => {
+const render = () => {
   ReactDOM.render(
     <Provider store={store}>
-      <LanguageProvider messages={messages}>
-        <Router
-          history={history}
-          routes={rootRoute}
-          render={
+      <Router
+        history={history}
+        routes={rootRoute}
+        render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
             applyRouterMiddleware(useScroll())
           }
-        />
-      </LanguageProvider>
+      />
     </Provider>,
     document.getElementById('app')
   );
 };
 
+initAuth(store.dispatch)
+  .then(() => render())
+  .catch((error) => console.error(error)); // eslint-disable-line no-console
+
 // Hot reloadable translation json files
-if (module.hot) {
-  // modules.hot.accept does not accept dynamic dependencies,
-  // have to be constants at compile-time
-  module.hot.accept('./i18n', () => {
-    render(translationMessages);
-  });
-}
+// if (module.hot) {
+//   // modules.hot.accept does not accept dynamic dependencies,
+//   // have to be constants at compile-time
+//   module.hot.accept('./i18n', () => {
+//     render(translationMessages);
+//   });
+// }
 
 // Chunked polyfill for browsers without Intl support
-if (!window.Intl) {
-  (new Promise((resolve) => {
-    resolve(import('intl'));
-  }))
-    .then(() => Promise.all([
-      import('intl/locale-data/jsonp/en.js'),
-      import('intl/locale-data/jsonp/de.js'),
-    ]))
-    .then(() => render(translationMessages))
-    .catch((err) => {
-      throw err;
-    });
-} else {
-  render(translationMessages);
-}
+// if (!window.Intl) {
+//   (new Promise((resolve) => {
+//     resolve(import('intl'));
+//   }))
+//     .then(() => Promise.all([
+//       import('intl/locale-data/jsonp/en.js'),
+//       import('intl/locale-data/jsonp/de.js'),
+//     ]))
+//     .then(() => render(translationMessages))
+//     .catch((err) => {
+//       throw err;
+//     });
+// } else {
+//   render(translationMessages);
+// }
 
 // Install ServiceWorker and AppCache in the end since
 // it's not most important operation and if main code fails,

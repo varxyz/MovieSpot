@@ -28,11 +28,17 @@ import {
   LOAD_POPULAR_SUCCESS,
   LOAD_POPULAR,
   CHANGE_SEARCH_QUERY,
+  RETR_FAV,
+  LOAD_WATCH,
+  FETCH_MOVIE_DB,
+  FETCH_MOVIE_DB_SUCCESS,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
   name: false,
+  dbmov: false,
+  favorites: [],
   loading: false,
   movie: {
     singleMovie: false,
@@ -54,11 +60,31 @@ const initialState = fromJS({
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
+    case FETCH_MOVIE_DB_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('dbmov', action.responses);
+    case LOAD_WATCH:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .set('favorites', false);
+    case RETR_FAV:
+      return state
+        .set('loading', false)
+        .set('error', false)
+        .set('favorites', action.arr);
     case FETCH_MOVIE:
       return state
         .set('loading', true)
         .set('error', false)
         .setIn(['movie', 'singleMovie'], false);
+    case FETCH_MOVIE_DB:
+      return state
+        .set('loading', true)
+        .set('error', false)
+        .set('dbmov', false);
     case FETCH_MOVIE_SUCCES:
       return state
         .set('loading', false)

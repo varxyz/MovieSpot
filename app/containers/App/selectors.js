@@ -47,6 +47,14 @@ const makeSelectNameQ = () => createSelector(
   selectGlobal,
   (globalState) => globalState.get('name')
 );
+const makeSelectFavs = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('favorites')
+);
+const makeSelectDbFavs = () => createSelector(
+  selectGlobal,
+  (globalState) => globalState.get('dbmov')
+);
 const makeSelectAuth = () => createSelector(
   selectAuth,
   (authState) => authState.toJS()
@@ -75,6 +83,8 @@ const makeSelectLocationState = () => {
 
 export {
   makeSelectAuth,
+  makeSelectDbFavs,
+  makeSelectFavs,
   selectGlobal,
   selectAuth,
   makeSelectNameQ,

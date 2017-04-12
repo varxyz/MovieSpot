@@ -15,11 +15,7 @@
  *    }
  */
 
-import {
-  SET_MOVIE_ID,
-  FETCH_MOVIE,
-  FETCH_MOVIE_SUCCES,
-} from './constants';
+import { SET_MOVIE_ID, FETCH_MOVIE, FETCH_MOVIE_SUCCES, HANDLE_TOGGLE, } from './constants';
 
 /**
  * Changes the input field of the form
@@ -45,6 +41,15 @@ export function movieFetched(name) {
   return {
     type: FETCH_MOVIE_SUCCES,
     name,
+  };
+}
+export function toggle(id, active) {
+  return {
+    type: HANDLE_TOGGLE,
+    payload: {
+      id,
+      active
+    }
   };
 }
 

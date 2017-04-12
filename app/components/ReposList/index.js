@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
 import RepoListItem from 'containers/RepoListItem';
+import ColumnFit from 'components/ColumnFit/'
 import {
   Button,
   Divider,
@@ -37,14 +38,14 @@ function ReposList({ loading, error, repos, popular }) {
 
   if (popular) {
     const movie = popular.results.map((item, index) => (
-      <Grid.Column computer={2} mobile={8} style={{ padding: '0.3rem' }} key={`item-${index}`}>
+      <ColumnFit computer={2} mobile={8} style={{ padding: '0.3rem' }} key={`item-${index}`}>
         <Link to={`/movie/${item.id}`}>
           <Card
             className='pt-card pt-interactive pt-elevation-1'
             image={`https://image.tmdb.org/t/p/w185/${item.poster_path}`}
           />
         </Link>
-      </Grid.Column>
+      </ColumnFit>
     )).slice(0,16);
 
     return (

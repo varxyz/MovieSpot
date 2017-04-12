@@ -27,7 +27,7 @@ import {
   Popup,
 } from 'semantic-ui-react';
 import { SmallWrapper, BigWrapper } from './Wrapper';
-import { fetchMovie, setMovie } from './actions';
+import { fetchMovie, setMovie, toggle } from './actions';
 import { makeSelectMovie } from './selectors';
 import { makeSelectMovieQ, makeSelectLoading } from '../App/selectors';
 import TheMovie from 'components/TheMovie';
@@ -46,11 +46,13 @@ export class MoviePage extends React.Component {
     }
   }
   render() {
-    const { movie, loading, movieForeverAlone } = this.props;
+    const { movie, loading, movieForeverAlone, handleToggle, params } = this.props;
     const reposListProps = {
       loading,
       movieForeverAlone,
       movie,
+      handleToggle,
+      params,
     };
     return (
       <article>
@@ -90,6 +92,9 @@ export function mapDispatchToProps(dispatch) {
     },
     setTheMovie: id => {
       dispatch(setMovie(id));
+    },
+    handleToggle: (id, active) => {
+      dispatch(toggle(id, active));
     },
   };
 }

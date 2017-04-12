@@ -39,7 +39,7 @@ const SignInPage = ({ signInWithGithub, signInWithGoogle, signInWithTwitter, sig
       ></Icon>
     </Grid.Column>
   </Grid>
-  );
+    );
 
 SignInPage.propTypes = {
   signInWithGithub: PropTypes.func.isRequired,

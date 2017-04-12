@@ -22,6 +22,10 @@ import {
   LOAD_POPULAR,
   LOAD_POPULAR_SUCCESS,
   CHANGE_SEARCH_QUERY,
+  LOAD_WATCH,
+  RETR_FAV,
+  FETCH_MOVIE_DB,
+  FETCH_MOVIE_DB_SUCCESS,
 } from './constants';
 
 /**
@@ -29,6 +33,31 @@ import {
  *
  * @return {object} An action object with a type of LOAD_REPOS
  */
+
+export function fetchMovieDb() {
+  return {
+    type: FETCH_MOVIE_DB,
+  };
+}
+export function fetchMovieDbSuccess(arr) {
+  return {
+    type: FETCH_MOVIE_DB_SUCCESS,
+    arr,
+  };
+}
+
+export function loadWatch(uid) {
+  return {
+    type: LOAD_WATCH,
+    uid,
+  };
+}
+export function retrFav(arr) {
+  return {
+    type: RETR_FAV,
+    arr,
+  };
+}
 export function loadRepos() {
   return {
     type: LOAD_REPOS,

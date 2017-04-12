@@ -3,6 +3,9 @@
 // See http://blog.mxstbr.com/2016/01/react-apps-with-pages for more information
 // about the code splitting business
 import { getAsyncInjectors } from './utils/asyncInjectors';
+import { isAuthenticated, selectGlobal } from 'containers/app/selectors';
+import { makeSelectRepos, makeSelectQueryname, makeSelectAuth } from 'containers/App/selectors';
+import { AuthState } from 'containers/auth/reducer';
 
 const errorLoading = (err) => {
   console.error('Dynamic page loading failed', err); // eslint-disable-line no-console
@@ -12,6 +15,13 @@ const loadModule = (cb) => (componentModule) => {
   cb(null, componentModule.default);
 };
 
+const requireAuth = (store) => (nextState, replace) => {
+  if (!store.getState().toJS().auth.authenticated) {
+    replace('/signin');
+  }
+};
+
+
 export default function createRoutes(store) {
   // create reusable async injectors using getAsyncInjectors factory
   const { injectReducer, injectSagas } = getAsyncInjectors(store);
@@ -19,6 +29,7 @@ export default function createRoutes(store) {
     {
       path: '/',
       name: 'home',
+      // onEnter: requireAuth(store),
       getComponent(nextState, cb) {
         // debugger
         const importModules = Promise.all([
@@ -26,7 +37,7 @@ export default function createRoutes(store) {
           import('containers/HomePage/sagas'),
           import('containers/HomePage'),
         ]);
-
+        // console.log(store.getState().toJS());
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
@@ -40,12 +51,35 @@ export default function createRoutes(store) {
     }, {
       path: '/name/:id',
       name: 'name',
+      // onEnter: requireAuth(),
       getComponent(nextState, cb) {
         // debugger
         const importModules = Promise.all([
           import('containers/NamePage/reducer'),
           import('containers/HomePage/sagas'),
           import('containers/NamePage'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('name', reducer.default);
+          injectSagas(sagas.default);
+
+          renderRoute(component);
+        });
+        importModules.catch(errorLoading);
+      },
+    }, {
+      path: '/watchlist',
+      name: 'watchlist',
+      onEnter: requireAuth(store),
+      getComponent(nextState, cb) {
+        // debugger
+        const importModules = Promise.all([
+          import('containers/HomePage/reducer'),
+          import('containers/HomePage/sagas'),
+          import('containers/WatchListPage/'),
         ]);
 
         const renderRoute = loadModule(cb);
