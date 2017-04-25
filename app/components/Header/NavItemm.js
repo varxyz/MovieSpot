@@ -1,15 +1,13 @@
-import { NavItem } from 'react-bootstrap';
+import { NavItem as NavItemCustom } from 'react-bootstrap';
 import styled from 'styled-components';
 
 
-const NavItemm = styled(NavItem)`
+const NavItem = styled(NavItemCustom)`
   a {
-    padding: 10px 0 !important;
+    padding: 0;
   }
 `;
-export const NavItemSmall = styled(NavItem)`
-  a {
-    padding: 10px 0 !important;
-  }
+export const NavItemSmall = styled(NavItemCustom)`
+    padding: 1em;
 `;
-export default NavItemm;
+export default NavItem;

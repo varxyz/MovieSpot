@@ -3,24 +3,15 @@ import List from 'components/List';
 import { Link } from 'react-router';
 import ListItem from 'components/ListItem';
 import Overlay from './Overlay';
-import { H11, H12 } from '../H1';
 import { Button, Divider, Dimmer, Loader, Card, Icon, Image, Label, Grid } from 'semantic-ui-react';
+import { H11, H12 } from '../H1';
 
-class ReposList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      active: false,
-    };
+function TheMovie(props) {
+  const { loading, movieForeverAlone, movie, handleToggle, active, handleSetActive, params } = props;
+  const toggleStatus = () => {
+    handleSetActive(!active);
+    // handleToggle(params.id, !active);
   }
-  toggleStatus = () => {
-    this.setState({
-      active: !this.state.active,
-    }),
-    this.props.handleToggle(this.props.params.id, !this.state.active);
-  }
-  render() {
-    const { loading, movieForeverAlone, movie, handleToggle } = this.props;
     if (loading) {
       return (
         <Dimmer active>
@@ -60,10 +51,10 @@ class ReposList extends React.Component {
                 fluid
                 color="yellow"
                 toggle
-                active={this.state.active}
-                onClick={this.toggleStatus}
+                active={active}
+                onClick={toggleStatus}
               >
-                {this.state.active ? <span><Icon name="checkmark" />Added</span> : <span><Icon name="add" />Watchlist</span>}
+                {active ? <span><Icon name="checkmark" />Added</span> : <span><Icon name="add" />Watchlist</span>}
               </Button>
             </Grid.Column>
             <Grid.Column mobile={16} computer={12} style={{ padding: '0.5rem' }}>
@@ -150,12 +141,12 @@ class ReposList extends React.Component {
     }
 
     return null;
-  }
+
 }
 
-ReposList.propTypes = {
+TheMovie.propTypes = {
   loading: PropTypes.bool,
 // popular: PropTypes.array,
 };
 
-export default ReposList;
+export default TheMovie;

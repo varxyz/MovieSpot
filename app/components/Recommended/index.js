@@ -8,7 +8,7 @@ import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Labe
 
 function ReposList({loading, movieForeverAlone, movie}) {
   if (loading) {
-    return <LoadingIndicator />;
+    // return <LoadingIndicator />;
   }
 
   // if (error !== false) {

@@ -18,7 +18,7 @@ class ReposList extends React.Component {
   };
 
   render() {
-    const { loading, name } = this.props;
+    const { loading, name, error } = this.props;
 
     if (loading) {
       return (
@@ -30,12 +30,12 @@ class ReposList extends React.Component {
       );
     }
 
-    // if (error !== false) {
-    //   const ErrorComponent = () => (
-    //     <ListItem item={'Something went wrong, please try again!'} />
-    //   );
-    //   return <List component={ErrorComponent} />;
-    // }
+    if (error !== false) {
+      const ErrorComponent = () => (
+        <ListItem item={'Something went wrong, please try again!'} />
+      );
+      return <List component={ErrorComponent} />;
+    }
 
     if (name) {
       return (

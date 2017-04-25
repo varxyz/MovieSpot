@@ -13,3 +13,4 @@ export const FETCH_MOVIE = 'boilerplate/Movie/FETCH_MOVIE';
 export const SET_MOVIE_ID = 'boilerplate/Movie/SET_MOVIE_ID';
 export const FETCH_MOVIE_SUCCES = 'boilerplate/Movie/FETCH_MOVIE_SUCCES';
 export const HANDLE_TOGGLE = 'boilerplate/Movie/HANDLE_TOGGLE';
+export const SET_ACTIVE = 'boilerplate/Movie/SET_ACTIVE';

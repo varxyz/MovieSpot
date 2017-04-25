@@ -4,7 +4,6 @@ import { createStructuredSelector } from 'reselect';
 import { Link, browserHistory } from 'react-router';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Button, Icon } from 'semantic-ui-react';
-import debounce from 'lodash.debounce';
 
 import { loadRepos, changeSearchQuery } from 'containers/App/actions';
 import { makeSelectRepos, makeSelectQueryname, makeSelectAuth } from 'containers/App/selectors';
@@ -27,6 +26,7 @@ class Header extends React.Component {
   }
   resetComponent = () => this.setState({
     isLoading2: false,
+    value2: '',
     results2: [],
   });
 
@@ -43,33 +43,44 @@ class Header extends React.Component {
     this.setState({
       isLoading2: true,
       value2: e.target.value,
-    }, debounce(() => {
-      this.props.assignQuery(this.state.value2);
-      if (this.state.value2.length > 0) this.props.search();
-      setTimeout(() => {
+    });
+    this.props.assignQuery(e.target.value);
+    setTimeout(
+      () => {
+        if (this.state.value2.length > 0) {
+          this.props.search();
+        }
+      },
+      20
+    );
+    setTimeout(
+      () => {
         if (this.props.searchResults && this.props.searchResults.results.length > 0) {
           const results = this.props.searchResults.results
-          .filter((item) => item.media_type === 'movie' || 'person')
-          .map((item) => ({
-            key: item.id,
-            mediaType: item.media_type,
-            title: item.original_title || item.name,
-            image: item.poster_path || item.profile_path
-              ? `https://image.tmdb.org/t/p/w185/${item.poster_path || item.profile_path}`
-              : <Noposter />,
-            price: item.vote_average || <Icon name="minus" />,
-            description: item.release_date
-              ? item.release_date.slice(0, 4)
-              : '',
-          }))
-          .slice(0, 10);
+            .filter((item) => item.media_type === 'movie' || 'person')
+            .map((item) => ({
+              key: item.id,
+              mediaType: item.media_type,
+              title: item.original_title || item.name,
+              image: item.poster_path || item.profile_path
+                ? `https://image.tmdb.org/t/p/w185/${item.poster_path || item.profile_path}`
+                : <Noposter />,
+              price: item.vote_average || <Icon name="minus" />,
+              description: item.release_date
+                ? item.release_date.slice(0, 4)
+                : '',
+            }))
+            .slice(0, 10);
           this.setState({
             isLoading2: false,
             results2: results,
           });
-        } else if (this.props.searchResults.results.length === 0) this.resetComponent();
-      }, 300);
-    }, 500));
+        } else {
+          return this.resetComponent();
+        }
+      },
+      300
+    );
   };
   render() {
     return (
@@ -88,6 +99,7 @@ class Header extends React.Component {
               <StyledSearch
                 style={{ textAlign: 'center' }}
                 fluid
+                className="alo"
                 placeholder="Search movies and names..."
                 value={this.state.value2}
                 results={this.state.results2}
@@ -97,28 +109,26 @@ class Header extends React.Component {
               />
             </NavItemm>
           </Nav>
-          <Nav pullRight>
-            <NavItemSmall className="trololo" componentClass="span">
-              { this.props.authenticated.authenticated
-                ?
-                  <Button.Group>
-                    <Link to="/watchlist">
-                      <Button basic>
-                    Watchlist
-                  </Button>
-                    </Link>
-                    <Button onClick={this.props.signOut} basic>
-                    Sign Out
-                  </Button>
-                  </Button.Group>
-                : <Navbar.Text>
-                  <Link to="/signin">
+          <Nav pullRight >
+            <NavItemSmall className='trololo' componentClass="span">{ this.props.authenticated.authenticated
+              ?
+                <Button.Group >
+                  <Link to="/watchlist">
                     <Button basic>
-                      Sign In
-                    </Button>
+                        Watchlist
+                      </Button>
                   </Link>
-                </Navbar.Text> }
-            </NavItemSmall>
+                  <Button onClick={this.props.signOut} basic>
+                      Sign Out
+                    </Button>
+                </Button.Group>
+              : <Navbar.Text >
+                <Link to="/signin">
+                  <Button basic>
+                    Sign In
+                  </Button>
+                </Link>
+              </Navbar.Text> }</NavItemSmall>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

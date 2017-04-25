@@ -11,24 +11,27 @@ export const authActions = {
   SIGN_OUT_FULFILLED: 'SIGN_OUT_FULFILLED',
 
 
-  signIn: authProvider => ({
+  signIn: (authProvider) => ({
     type: authActions.SIGN_IN,
-    payload: {authProvider}
+    payload: { authProvider },
   }),
 
-  signInFailed: error => ({
+  signInFailed: (error) => ({
     type: authActions.SIGN_IN_FAILED,
-    payload: {error}
+    payload: { error },
   }),
 
-  signInFulfilled: authUser => ({
+  signInFulfilled: (authUser) => ({
     type: authActions.SIGN_IN_FULFILLED,
-    payload: {authUser}
+    payload: { authUser },
   }),
 
-  signInWithGithub: () => authActions.signIn(
+  signInWithGithub: () => {
+    console.log('git')
+    return authActions.signIn(
     new firebase.auth.GithubAuthProvider()
-  ),
+  );
+  },
 
   signInWithGoogle: () => authActions.signIn(
     new firebase.auth.GoogleAuthProvider()
@@ -42,15 +45,15 @@ export const authActions = {
   ),
 
   signOut: () => ({
-    type: authActions.SIGN_OUT
+    type: authActions.SIGN_OUT,
   }),
 
-  signOutFailed: error => ({
+  signOutFailed: (error) => ({
     type: authActions.SIGN_OUT_FAILED,
-    payload: {error}
+    payload: { error },
   }),
 
   signOutFulfilled: () => ({
-    type: authActions.SIGN_OUT_FULFILLED
-  })
+    type: authActions.SIGN_OUT_FULFILLED,
+  }),
 };

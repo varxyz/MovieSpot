@@ -4,9 +4,9 @@ import { createStructuredSelector } from 'reselect';
 import { Grid } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { loadWatch, fetchMovieDb } from 'containers/App/actions';
+import Favorites from 'components/WatchListItem';
 import { BigWrapper } from '../MoviePage/Wrapper';
 import { makeSelectLoading, makeSelectAuth, makeSelectFavs, makeSelectDbFavs } from '../App/selectors';
-import Favorites from 'components/WatchListItem';
 import Section from '../HomePage/Section';
 
 export class WatchList extends React.Component {

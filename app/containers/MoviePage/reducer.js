@@ -13,11 +13,13 @@ import { fromJS } from 'immutable';
 
 import {
   SET_MOVIE_ID,
+  SET_ACTIVE,
 } from './constants';
 
 // The initial state of the App
 const initialState = fromJS({
-  movieForeverAlone: '',
+  // movieForeverAlone: '',
+  active: false,
 });
 
 function MovieReducer(state = initialState, action) {
@@ -25,6 +27,9 @@ function MovieReducer(state = initialState, action) {
     case SET_MOVIE_ID:
       return state
         .set('movieForeverAlone', action.id);
+    case SET_ACTIVE:
+      return state
+        .set('active', action.active);
     default:
       return state;
   }
