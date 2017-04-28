@@ -10,7 +10,6 @@ import createReducer from './reducers';
 import sagas from './sagas';
 
 
-
 export default function configureStore(initialState = {}, history) {
   // Create the store with two middlewares
   // 1. sagaMiddleware: Makes redux-sagas work

@@ -16,7 +16,6 @@ export class HomePage extends React.PureComponent {
   componentDidMount() {
     this.props.loadMainPopular();
   }
-
   render() {
     const { loading, error, repos, popular, people } = this.props;
     const listProps = {
@@ -26,13 +25,12 @@ export class HomePage extends React.PureComponent {
       popular,
       people,
     };
-
     return (
       <article>
         <Helmet
           title="Home Page"
           meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage' },
+            { name: 'description', content: 'MovieSpot homepage' },
           ]}
         />
         <div>
