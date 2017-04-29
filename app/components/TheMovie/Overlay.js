@@ -80,7 +80,7 @@ class ModalDimmer extends Component {
             if (movie.reviews.results.length === 0) {
               return (
                 <Menu.Item
-                  style={{ minWidth: '5.5em' }}
+                  style={{ minWidth: '6.3em' }}
                   disabled
                   name="Reviews"
                 >
@@ -91,7 +91,7 @@ class ModalDimmer extends Component {
             } else {
               return (
                 <Menu.Item
-                  style={{ minWidth: '6.2em' }}
+                  style={{ minWidth: '6.3em' }}
                   name="Reviews"
                   onClick={this.show('inverted')}
                 >

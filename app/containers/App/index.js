@@ -1,18 +1,9 @@
-/**
- *
- * App
- *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
- */
-
 import React from 'react';
 import Helmet from 'react-helmet';
 import styled from 'styled-components';
 
 import Header from 'components/Header';
 import Footer from 'components/Footer';
-import withProgressBar from 'components/ProgressBar';
 
 import { connect } from 'react-redux';
 import { authActions, getAuth } from '../auth';
@@ -26,11 +17,12 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
-export function App({ children, signOut}) {
+export function App({ children, signOut }) {
   return (
     <div>
       <Header
-        signOut={signOut} />
+        signOut={signOut}
+      />
       <AppWrapper>
         <Helmet
           titleTemplate="%s - React.js Boilerplate"
@@ -40,7 +32,7 @@ export function App({ children, signOut}) {
           ]}
         />
         {React.Children.toArray(children)}
-        {/*<Footer />*/}
+        {/* <Footer />*/}
       </AppWrapper>
     </div>
   );
@@ -54,6 +46,7 @@ const mapDispatchToProps = {
 
 App.propTypes = {
   children: React.PropTypes.node,
+  signOut: React.PropTypes.func,
 };
 
 export default connect(

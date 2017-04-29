@@ -9,8 +9,10 @@ import TheMovie from 'components/TheMovie';
 import Recommended from 'components/Recommended';
 import { SmallWrapper, BigWrapper } from './Wrapper';
 import { fetchMovie, setMovie, toggle, setActive } from './actions';
+import { loadWatch, fetchMovieDb } from 'containers/App/actions';
+
 import { makeSelectMovie, makeSelectActive } from './selectors';
-import { makeSelectMovieQ, makeSelectLoading } from '../App/selectors';
+import { makeSelectAuth, makeSelectMovieQ, makeSelectLoading, makeSelectError, makeSelectFavs } from 'containers/App/selectors';
 import Section from '../HomePage/Section';
 
 export class MoviePage extends React.Component {
@@ -18,6 +20,8 @@ export class MoviePage extends React.Component {
   componentDidMount() {
     this.props.setTheMovie(this.props.params.id);
     this.props.fetchMovie(this.props.params.id);
+    this.props.handleSetActive(this.props.active);
+    if(this.props.auth.authenticated)this.props.fetchFav(this.props.auth.user.authUser.uid);
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.params.id !== nextProps.params.id) {
@@ -26,7 +30,7 @@ export class MoviePage extends React.Component {
     }
   }
   render() {
-    const { movie, loading, movieForeverAlone, handleToggle, params, handleSetActive, active } = this.props;
+    const { movie, loading, movieForeverAlone, handleToggle, params, handleSetActive, active, error, auth, favorites } = this.props;
     const reposListProps = {
       loading,
       movieForeverAlone,
@@ -35,6 +39,9 @@ export class MoviePage extends React.Component {
       params,
       handleSetActive,
       active,
+      error,
+      auth,
+      favorites,
     };
     return (
       <article>
@@ -75,6 +82,9 @@ export function mapDispatchToProps(dispatch) {
     handleSetActive: (active) => {
       dispatch(setActive(active));
     },
+    fetchFav: (id) => {
+      dispatch(loadWatch(id));
+    },
   };
 }
 
@@ -83,6 +93,9 @@ const mapStateToProps = createStructuredSelector({
   movie: makeSelectMovieQ(),
   loading: makeSelectLoading(),
   active: makeSelectActive(),
+  error: makeSelectError(),
+  auth: makeSelectAuth(),
+  favorites: makeSelectFavs(),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MoviePage);
