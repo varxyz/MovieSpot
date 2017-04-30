@@ -2,9 +2,9 @@ import React, { PropTypes } from 'react';
 import { Divider, Dimmer, Loader, Card, Grid } from 'semantic-ui-react';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
-import { H12 } from '../H1';
+import { Heading2 } from '../H1';
 
-class ReposList extends React.Component {
+class Person extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,7 +40,7 @@ class ReposList extends React.Component {
     if (name) {
       return (
         <Grid>
-          <Grid.Row style={{ padding: '1em', margin: '0' }}>
+          <Grid.Row style={{ padding: '1em', margin: '0px' }}>
             <Grid.Column
               mobile={16}
               computer={4}
@@ -51,25 +51,24 @@ class ReposList extends React.Component {
             </Grid.Column>
             <Grid.Column mobile={16} computer={12} style={{ padding: '0.5rem' }}>
               <div>
-                <H12>
+                <Heading2>
                   { name.name }
-                </H12>
+                </Heading2>
               </div>
               { (() => {
                 if (this.props.name.biography && !this.state.expanded) {
-                  const delimiter = '.',
-                    last = '3',
-                    tokens = this.props.name.biography
+                  const delimiter = '.';
+                  const last = '3';
+                  const tokens = this.props.name.biography
                         .split(delimiter)
-                        .slice(0, last),
-                    result = tokens.join(delimiter);
+                        .slice(0, last);
+                  const result = tokens.join(delimiter);
                   return `${result}.`;
-                } else {
-                  return this.props.name.biography;
                 }
+                return this.props.name.biography;
               })() }
               { this.props.name.biography
-                ? <div onClick={this.handleClick} style={{ cursor: 'pointer', bottom: '1', left: '5' }} className="movie-tags pt-tag pt-intent-success pt-minimal">
+                ? <div onClick={this.handleClick} style={{ cursor: 'pointer', bottom: '1px', left: '5px' }} className="movie-tags pt-tag pt-intent-success pt-minimal">
                     Read
                     { this.state.expanded ? 'Less' : 'More' }
                 </div>
@@ -77,11 +76,11 @@ class ReposList extends React.Component {
             </Grid.Column>
           </Grid.Row>
           <Divider style={{ margin: '0' }} />
-          <Grid.Row columns={8} style={{ padding: '.4em 1.4em 1.4em', margin: '0' }}>
+          <Grid.Row columns={8} style={{ padding: '.4em 1.4em 1.4em', margin: '0px' }}>
             { name.images.profiles
                 .slice(1)
-                .map((item) => (
-                  <Grid.Column style={{ padding: '.5rem' }}>
+                .map((item, i) => (
+                  <Grid.Column key={i} style={{ padding: '.5rem' }}>
                     <div>
                       <Card href={`https://image.tmdb.org/t/p/w1280/${item.file_path}`} image={`https://image.tmdb.org/t/p/w185/${item.file_path}`} target="_blank" />
                     </div>
@@ -96,9 +95,16 @@ class ReposList extends React.Component {
     return null;
   }
 }
-ReposList.propTypes = {
+Person.propTypes = {
   loading: PropTypes.bool,
-// popular: PropTypes.array,
+  name: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
 };
 
-export default ReposList;
+export default Person;

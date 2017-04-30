@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import List from 'components/List';
 import ListItem from 'components/ListItem';
-import LoadingIndicator from 'components/LoadingIndicator';
+// import LoadingIndicator from 'components/LoadingIndicator';
 
 import { Button, Divider, Segment, Dimmer, Loader, Card, Icon, Image, Item, Label, Grid, Popup } from 'semantic-ui-react';
 
@@ -37,7 +37,6 @@ function ReposList({ loading, auth, dbmov }) {
           </Link>
         </Grid.Column>
       ))
-      .slice(0, 8);
     return (
       <Grid.Row style={{ padding: '1rem', margin: '0' }} columns={8}>
         { name }

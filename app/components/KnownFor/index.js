@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Dimmer, Loader, Card, Grid } from 'semantic-ui-react';
+import ListItem from 'components/ListItem';
 
-function ReposList({ loading, name }) {
+function KnownFor({ loading, name, error }) {
   if (loading) {
     return (
       <Dimmer active>
@@ -11,12 +12,12 @@ function ReposList({ loading, name }) {
     );
   }
 
-  // if (error !== false) {
-  //   const ErrorComponent = () => (
-  //     <ListItem item={'Something went wrong, please try again!'} />
-  //   );
-  //   return <div component={ErrorComponent} />;
-  // }
+  if (error !== false) {
+    const ErrorComponent = () => (
+      <ListItem item={'Something went wrong, please try again!'} />
+    );
+    return <div component={ErrorComponent} />;
+  }
   if (name) {
     const entry = name.combined_credits.cast
       .map((item, index) => {
@@ -34,11 +35,12 @@ function ReposList({ loading, name }) {
             </Grid.Column>
           );
         }
+        return null;
       });
     const crew = name.combined_credits.crew
       .filter((item) => item.job === 'Director')
-      .map((item) => (
-        <Grid.Column mobile={8} computer={2} style={{ padding: '0.5rem' }}>
+      .map((item, i) => (
+        <Grid.Column key={i} mobile={8} computer={2} style={{ padding: '0.5rem' }}>
           <Link to={`/movie/${item.id}`}>
             <Card className="pt-card pt-interactive pt-elevation-1" image={`https://image.tmdb.org/t/p/w185/${item.poster_path}`} />
           </Link>
@@ -55,11 +57,16 @@ function ReposList({ loading, name }) {
   return null;
 }
 
-ReposList.propTypes = {
+KnownFor.propTypes = {
   loading: PropTypes.bool,
-// error: PropTypes.any,
-// repos: PropTypes.any,
-// popular: PropTypes.array,
+  name: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
 };
 
-export default ReposList;
+export default KnownFor;

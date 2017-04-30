@@ -1,28 +1,18 @@
-// import React from 'react';
-// // import { FormattedMessage } from 'react-intl';
+import React from 'react';
+import { Icon } from 'semantic-ui-react';
+import Wrapper from './Wrapper';
 
-// import A from 'components/A';
-// import LocaleToggle from 'containers/LocaleToggle';
-// import Wrapper from './Wrapper';
-// import messages from './messages';
-// import { Icon } from 'semantic-ui-react';
+function Footer() {
+  return (
+    <Wrapper>
+      <section>
+        <div>TechStack: React, Redux, ImmutableJS, ReduxSaga, Firebase, Reselect. © MIT</div>
+      </section>
+      <section>
+        <div>Made by <a href=""><Icon color="black" name="github" />varxyz</a></div>
+      </section>
+    </Wrapper>
+  );
+}
 
-// function Footer() {
-//   return (
-//     <Wrapper>
-//       <section>
-//         <FormattedMessage {...messages.licenseMessage} />
-//       </section>
-//       <section>
-//         <FormattedMessage
-//           {...messages.authorMessage}
-//           values={{
-//             author: <A href="https://github.com/varxyz"><Icon color="black" name="github" />Sergey M</A>,
-//           }}
-//         />
-//       </section>
-//     </Wrapper>
-//   );
-// }
-
-// export default Footer;
+export default Footer;

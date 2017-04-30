@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
@@ -29,7 +29,7 @@ export class NamePage extends React.Component {
     };
     return (
       <article>
-        <Helmet title="Home Page" meta={[{ name: 'description', content: 'A React.js Boilerplate application homepage' }]} />
+        <Helmet title="Name Page" meta={[{ name: 'description', content: 'Name Page' }]} />
         <div>
           <Section>
             <BigWrapper>
@@ -53,6 +53,21 @@ export class NamePage extends React.Component {
     );
   }
 }
+
+NamePage.propTypes = {
+  loading: PropTypes.bool,
+  setTheName: React.PropTypes.func,
+  setFetchName: React.PropTypes.func,
+  params: React.PropTypes.object,
+  name: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+};
 
 export function mapDispatchToProps(dispatch) {
   return {

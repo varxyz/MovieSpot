@@ -4,7 +4,7 @@ import { Column, GridRow } from 'components/Grid/';
 import { Link } from 'react-router';
 import { Card } from 'semantic-ui-react';
 
-function ReposList({ error, people }) {
+function PopularPeople({ error, people }) {
   if (error !== false) {
     const ErrorComponent = () => (
       <ListItem item={'Something went wrong, please try again!'} />
@@ -34,7 +34,7 @@ function ReposList({ error, people }) {
   return null;
 }
 
-ReposList.propTypes = {
+PopularPeople.propTypes = {
   error: PropTypes.any,
   people: PropTypes.oneOfType([
     React.PropTypes.object,
@@ -42,4 +42,4 @@ ReposList.propTypes = {
   ]),
 };
 
-export default ReposList;
+export default PopularPeople;

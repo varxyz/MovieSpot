@@ -5,7 +5,7 @@ import ListItem from 'components/ListItem';
 import { Column, GridRow } from 'components/Grid/';
 import { Dimmer, Loader, Card } from 'semantic-ui-react';
 
-function ReposList({ loading, error, popular }) {
+function PopularList({ loading, error, popular }) {
   if (loading) {
     return (
       <Dimmer active>
@@ -46,7 +46,7 @@ function ReposList({ loading, error, popular }) {
   return null;
 }
 
-ReposList.propTypes = {
+PopularList.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.any,
   popular: PropTypes.oneOfType([
@@ -55,4 +55,4 @@ ReposList.propTypes = {
   ]),
 };
 
-export default ReposList;
+export default PopularList;

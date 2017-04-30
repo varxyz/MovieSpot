@@ -6,7 +6,7 @@ import Header from 'components/Header';
 import Footer from 'components/Footer';
 
 import { connect } from 'react-redux';
-import { authActions, getAuth } from '../auth';
+import { authActions } from '../auth';
 
 const AppWrapper = styled.div`
   max-width: calc(1190px + 16px * 2);
@@ -32,7 +32,7 @@ export function App({ children, signOut }) {
           ]}
         />
         {React.Children.toArray(children)}
-        {/* <Footer />*/}
+        <Footer />
       </AppWrapper>
     </div>
   );
@@ -50,8 +50,6 @@ App.propTypes = {
 };
 
 export default connect(
-  // mapStateToProps,
   null,
   mapDispatchToProps
 )(App);
-// export default withProgressBar(App);

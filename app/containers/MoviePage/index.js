@@ -7,12 +7,12 @@ import H2 from 'components/H2';
 import { Grid } from 'semantic-ui-react';
 import TheMovie from 'components/TheMovie';
 import Recommended from 'components/Recommended';
+import { loadWatch } from 'containers/App/actions';
+import { makeSelectAuth, makeSelectMovieQ, makeSelectLoading, makeSelectError, makeSelectFavs } from 'containers/App/selectors';
 import { SmallWrapper, BigWrapper } from './Wrapper';
 import { fetchMovie, setMovie, toggle, setActive } from './actions';
-import { loadWatch, fetchMovieDb } from 'containers/App/actions';
 
 import { makeSelectMovie, makeSelectActive } from './selectors';
-import { makeSelectAuth, makeSelectMovieQ, makeSelectLoading, makeSelectError, makeSelectFavs } from 'containers/App/selectors';
 import Section from '../HomePage/Section';
 
 export class MoviePage extends React.Component {
@@ -20,20 +20,34 @@ export class MoviePage extends React.Component {
   componentDidMount() {
     this.props.setTheMovie(this.props.params.id);
     this.props.fetchMovie(this.props.params.id);
-    this.props.handleSetActive(this.props.active);
-    if(this.props.auth.authenticated)this.props.fetchFav(this.props.auth.user.authUser.uid);
+    if (this.props.auth.authenticated) this.props.fetchFav(this.props.auth.user.authUser.uid);
   }
   componentWillReceiveProps(nextProps) {
+    const isActive = () => {
+      if (nextProps.favorites.length > 0) {
+        const res = nextProps.favorites.filter((i) => {
+          if (i.id === nextProps.params.id) {
+          // this.props.fetchFav(i.id)
+            return this.props.active !== i.active;
+              // return i.active;
+          }
+          return null;
+        });
+        if (res.length) return res[0].active;
+        return false;
+      }
+      return null;
+    };
+    this.props.auth.authenticated && this.props.active === nextProps.active ? this.props.handleSetActive(isActive()) : null;
     if (this.props.params.id !== nextProps.params.id) {
       this.props.setTheMovie(nextProps.params.id);
       this.props.fetchMovie(nextProps.params.id);
     }
   }
   render() {
-    const { movie, loading, movieForeverAlone, handleToggle, params, handleSetActive, active, error, auth, favorites } = this.props;
+    const { movie, loading, handleToggle, params, handleSetActive, active, error, auth, favorites } = this.props;
     const reposListProps = {
       loading,
-      movieForeverAlone,
       movie,
       handleToggle,
       params,
@@ -45,7 +59,7 @@ export class MoviePage extends React.Component {
     };
     return (
       <article>
-        <Helmet title="Home Page" meta={[{ name: 'description', content: 'A React.js Boilerplate application homepage' }, ]} />
+        <Helmet title="Home Page" meta={[{ name: 'description', content: 'Movie Page' }]} />
         <div>
           <Section>
             <BigWrapper>
@@ -67,6 +81,31 @@ export class MoviePage extends React.Component {
     );
   }
 }
+
+MoviePage.propTypes = {
+  setTheMovie: React.PropTypes.func,
+  loading: React.PropTypes.bool,
+  movie: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  fetchMovie: React.PropTypes.func,
+  handleToggle: React.PropTypes.func,
+  handleSetActive: React.PropTypes.func,
+  fetchFav: React.PropTypes.func,
+  auth: React.PropTypes.object,
+  favorites: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.array,
+    React.PropTypes.bool,
+  ]),
+  active: React.PropTypes.bool,
+  params: React.PropTypes.object,
+  error: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+};
 
 export function mapDispatchToProps(dispatch) {
   return {
