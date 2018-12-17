@@ -25,10 +25,10 @@ export function App({ children, signOut }) {
       />
       <AppWrapper>
         <Helmet
-          titleTemplate="%s - React.js Boilerplate"
-          defaultTitle="React.js Boilerplate"
+          titleTemplate="%s - Moviespot"
+          defaultTitle="Moviespot"
           meta={[
-            { name: 'description', content: 'A React.js Boilerplate application' },
+            { name: 'description', content: 'application for tracking your favorite movies' },
           ]}
         />
         {React.Children.toArray(children)}
